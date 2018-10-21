@@ -78,7 +78,6 @@ public class AddCustomer extends javax.swing.JFrame {
 
         phoneLabel.setText("Phone no");
 
-        addCustomer.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         addCustomer.setText("Add Customer");
         addCustomer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -120,7 +119,7 @@ public class AddCustomer extends javax.swing.JFrame {
                                 .addComponent(phoneField, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(107, 107, 107)
-                        .addComponent(addCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(addCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(

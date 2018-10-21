@@ -43,7 +43,7 @@ public class Customer extends javax.swing.JFrame {
         customerInfo = new javax.swing.JButton();
         addCustomer = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         customerInfo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         customerInfo.setText("Customer Info");
@@ -75,7 +75,7 @@ public class Customer extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(51, Short.MAX_VALUE)
+                .addContainerGap(42, Short.MAX_VALUE)
                 .addComponent(addCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(43, 43, 43)
                 .addComponent(customerInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -87,23 +87,23 @@ public class Customer extends javax.swing.JFrame {
 
     private void customerInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerInfoActionPerformed
         // TODO add your handling code here:
-        DisplayCustomer disc;
+        DisplayDepartment disd;
         try {
-            disc = new DisplayCustomer(con);
-            disc.setVisible(true);
+            disd = new DisplayDepartment(con);
+            disd.setVisible(true);
         } catch (SQLException ex) {
-            Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_customerInfoActionPerformed
 
     private void addCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCustomerActionPerformed
         // TODO add your handling code here:
-        AddCustomer ac;
+        AddDepartment ad;
         try {
-            ac = new AddCustomer(con, 0, -1, "", "", "", "");
-            ac.setVisible(true);
+            ad = new AddDepartment(con, 0, -1, "", "", "", "");
+            ad.setVisible(true);
         } catch (SQLException | ParseException ex) {
-            Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_addCustomerActionPerformed
 
