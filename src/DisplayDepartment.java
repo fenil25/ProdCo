@@ -223,9 +223,9 @@ public class DisplayDepartment extends javax.swing.JFrame {
                             .addComponent(managerLabel)
                             .addComponent(managerField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(nameLabel)
-                            .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(nameField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nameLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(dateLabel)
@@ -328,6 +328,7 @@ public class DisplayDepartment extends javax.swing.JFrame {
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(DisplayEmployees.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(f, "Something went wrong while Deleting Entry");
             }
         }
     }//GEN-LAST:event_delentryActionPerformed
@@ -406,7 +407,7 @@ public class DisplayDepartment extends javax.swing.JFrame {
             rs.close();
             st.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DisplayEmployees.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DisplayCustomer.class.getName()).log(Level.SEVERE, null, ex);
             JFrame f = new JFrame();
             JOptionPane.showMessageDialog(f, "Something went Wrong");
         }

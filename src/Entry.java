@@ -122,6 +122,8 @@ public class Entry extends javax.swing.JFrame {
 
     private void CustomerEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CustomerEntryActionPerformed
         // TODO add your handling code here:
+        Customer c = new Customer(con);
+        c.setVisible(true);
     }//GEN-LAST:event_CustomerEntryActionPerformed
 
     /**

@@ -15,18 +15,18 @@ import java.util.logging.Logger;
  *
  * @author Lenovo
  */
-public class Department extends javax.swing.JFrame {
+public class Customer extends javax.swing.JFrame {
 
     private Connection con;
 
     /**
-     * Creates new form Department
+     * Creates new form Customer
      */
-    public Department() {
+    public Customer() {
         initComponents();
     }
     
-    public Department(Connection con) {
+    public Customer(Connection con) {
         initComponents();
         this.con = con;
     }
@@ -40,24 +40,24 @@ public class Department extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        displayDepartment = new javax.swing.JButton();
-        addDepartment = new javax.swing.JButton();
+        customerInfo = new javax.swing.JButton();
+        addCustomer = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        displayDepartment.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        displayDepartment.setText("Display Department");
-        displayDepartment.addActionListener(new java.awt.event.ActionListener() {
+        customerInfo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        customerInfo.setText("Customer Info");
+        customerInfo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                displayDepartmentActionPerformed(evt);
+                customerInfoActionPerformed(evt);
             }
         });
 
-        addDepartment.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        addDepartment.setText("Add Department");
-        addDepartment.addActionListener(new java.awt.event.ActionListener() {
+        addCustomer.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        addCustomer.setText("Add Customer");
+        addCustomer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addDepartmentActionPerformed(evt);
+                addCustomerActionPerformed(evt);
             }
         });
 
@@ -66,46 +66,46 @@ public class Department extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(142, 142, 142)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(addDepartment, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(displayDepartment, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(137, Short.MAX_VALUE))
+                .addGap(171, 171, 171)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(addCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(customerInfo))
+                .addContainerGap(171, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(addDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
-                .addComponent(displayDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE)
+                .addComponent(addCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43)
+                .addComponent(customerInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void displayDepartmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayDepartmentActionPerformed
+    private void customerInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerInfoActionPerformed
         // TODO add your handling code here:
-        DisplayDepartment disd;
+        DisplayCustomer disc;
         try {
-            disd = new DisplayDepartment(con);
-            disd.setVisible(true);
+            disc = new DisplayCustomer(con);
+            disc.setVisible(true);
         } catch (SQLException ex) {
-            Logger.getLogger(Department.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_displayDepartmentActionPerformed
+    }//GEN-LAST:event_customerInfoActionPerformed
 
-    private void addDepartmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDepartmentActionPerformed
+    private void addCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCustomerActionPerformed
         // TODO add your handling code here:
-        AddDepartment ad;
+        AddCustomer ac;
         try {
-            ad = new AddDepartment(con, 0, -1, "", "", "", "");
-            ad.setVisible(true);
+            ac = new AddCustomer(con, 0, -1, "", "", "", "");
+            ac.setVisible(true);
         } catch (SQLException | ParseException ex) {
-            Logger.getLogger(Department.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_addDepartmentActionPerformed
+    }//GEN-LAST:event_addCustomerActionPerformed
 
     /**
      * @param args the command line arguments
@@ -124,26 +124,26 @@ public class Department extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Department.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Customer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Department.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Customer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Department.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Customer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Department.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Customer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Department().setVisible(true);
+                new Customer().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addDepartment;
-    private javax.swing.JButton displayDepartment;
+    private javax.swing.JButton addCustomer;
+    private javax.swing.JButton customerInfo;
     // End of variables declaration//GEN-END:variables
 }
