@@ -1,5 +1,8 @@
 
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -87,14 +90,24 @@ public class Issues extends javax.swing.JFrame {
 
     private void emp_issueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emp_issueActionPerformed
         // TODO add your handling code here:
-        AddIssue ae = new AddIssue(con, "employee");
-        ae.setVisible(true);
+        AddIssue ae;
+        try {
+            ae = new AddIssue(con, "employee", 0, -1, "", "", "", "", "");
+            ae.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Issues.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_emp_issueActionPerformed
 
     private void cst_issueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cst_issueActionPerformed
         // TODO add your handling code here:
-        AddIssue ae = new AddIssue(con, "customer");
-        ae.setVisible(true);
+        AddIssue ae;
+        try {
+            ae = new AddIssue(con, "customer", 0, -1, "", "", "", "", "");
+            ae.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Issues.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_cst_issueActionPerformed
 
     /**

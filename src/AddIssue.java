@@ -1,5 +1,15 @@
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -15,6 +25,11 @@ import java.sql.Connection;
 public class AddIssue extends javax.swing.JFrame {
 
     private Connection con;
+    HashMap<String, Integer> emp = new HashMap<>();
+    HashMap<String, Integer> cust = new HashMap<>();
+    private String caller;
+    private int updateFlag, issueId;
+    
 
     /**
      * Creates new form AddIssue
@@ -23,14 +38,40 @@ public class AddIssue extends javax.swing.JFrame {
         initComponents();
     }
     
-    public AddIssue(Connection con, String issueCall) {
+    public AddIssue(Connection con, String issueCall, int updateFlag, int issid, String name, String desc, 
+            String status, String rby, String assto) throws SQLException {
         this.con = con;
+        this.caller = issueCall;
+        this.updateFlag = updateFlag;
+        this.issueId = issid;
         initComponents();
+        
+        Statement st1 = con.createStatement();
+        ResultSet r = st1.executeQuery("SELECT * FROM Employee");
+        while(r.next()){
+            assignedToField.addItem(r.getString("first_name") + " " + r.getString("last_name"));
+            emp.put(r.getString("first_name") + " " + r.getString("last_name"), Integer.parseInt(r.getString("idEmployee")));
+        }
+       
         if(issueCall.equals("employee")){
             headLabel.setText("Employee Issue");
+            Statement st2 = con.createStatement();
+            ResultSet r2 = st2.executeQuery("SELECT * FROM Employee");
+            while(r2.next()){
+                reportedByField.addItem(r2.getString("first_name") + " " + r2.getString("last_name"));
+            }
         }else{
             headLabel.setText("Customer Issue");
+            Statement st3 = con.createStatement();
+            ResultSet r3 = st3.executeQuery("SELECT * FROM Customer");
+            while(r3.next()){
+                reportedByField.addItem(r3.getString("first_name") + " " + r3.getString("last_name"));
+                cust.put(r3.getString("first_name") + " " + r3.getString("last_name"), Integer.parseInt(r3.getString("idCustomer")));
+            }
         }
+        
+        AutoCompletion.enable(assignedToField);
+        AutoCompletion.enable(reportedByField);
     }
 
     /**
@@ -58,7 +99,7 @@ public class AddIssue extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        nameLabel.setText("Name");
+        nameLabel.setText("Issue Name");
 
         nameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -84,24 +125,25 @@ public class AddIssue extends javax.swing.JFrame {
         headLabel.setText("EMPLOYEE ISSUES");
 
         addButton.setText("Add Issue");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(assignedToLabel)
-                            .addComponent(reportedByLabel)
-                            .addComponent(statusLabel)
-                            .addComponent(descriptionLabel)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
-                        .addComponent(nameLabel)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(assignedToLabel)
+                    .addComponent(reportedByLabel)
+                    .addComponent(statusLabel)
+                    .addComponent(descriptionLabel)
+                    .addComponent(nameLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(headLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -155,6 +197,43 @@ public class AddIssue extends javax.swing.JFrame {
     private void nameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_nameFieldActionPerformed
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        // TODO add your handling code here:
+        if(caller.equals("employee")){
+            String name = nameField.getText();
+            String description = descriptionField.getText();
+            String reported_by_id = emp.get(reportedByField.getSelectedItem().toString())+"";
+            String assigned_to_id = emp.get(assignedToField.getSelectedItem().toString())+"";
+            String status = statusField.getSelectedItem().toString()+"";
+
+            String query1, query2;
+            query1 = String.format("INSERT INTO employee_issue (name, description, raised_by, assigned_to, status) VALUES('%s', '%s', %s, %s, '%s');", 
+                    name, description, reported_by_id, assigned_to_id, status);
+            query2 = String.format("UPDATE employee_issue SET name = '%s', description = '%s', status = '%s', raised_by = %s, assigned_to = %s"
+                    + " WHERE idEmployee_Issue = %s;",
+                     name, description, status, reported_by_id, assigned_to_id, issueId);
+            
+            System.out.println(query1);
+            System.out.println(query2);
+
+            try {
+                Statement addq = con.createStatement();
+                JFrame f = new JFrame();
+                if(updateFlag == 0){
+                    addq.executeUpdate(query1);
+                    JOptionPane.showMessageDialog(f, "Issue added successfully");
+                } else {
+                    addq.executeUpdate(query2);
+                    JOptionPane.showMessageDialog(f, "Issue updated successfully");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(AddDepartment.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            
+        }
+    }//GEN-LAST:event_addButtonActionPerformed
 
     /**
      * @param args the command line arguments

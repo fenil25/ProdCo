@@ -44,6 +44,7 @@ public class Entry extends javax.swing.JFrame {
         CustomerEntry = new javax.swing.JButton();
         IssueEntry = new javax.swing.JButton();
         OrderEntry = new javax.swing.JButton();
+        productEntry = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -76,22 +77,39 @@ public class Entry extends javax.swing.JFrame {
         });
 
         OrderEntry.setText("Order");
+        OrderEntry.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OrderEntryActionPerformed(evt);
+            }
+        });
+
+        productEntry.setText("Product");
+        productEntry.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                productEntryActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(154, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(DepartmentEntry)
-                    .addComponent(EmployeeEntry, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(CustomerEntry, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(OrderEntry)
-                            .addComponent(IssueEntry))
-                        .addGap(14, 14, 14)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(productEntry, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(135, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(EmployeeEntry)
+                            .addComponent(CustomerEntry)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(OrderEntry)
+                                    .addComponent(IssueEntry))
+                                .addGap(14, 14, 14))
+                            .addComponent(DepartmentEntry))))
                 .addGap(147, 147, 147))
         );
         layout.setVerticalGroup(
@@ -107,7 +125,9 @@ public class Entry extends javax.swing.JFrame {
                 .addComponent(IssueEntry)
                 .addGap(26, 26, 26)
                 .addComponent(OrderEntry)
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addGap(28, 28, 28)
+                .addComponent(productEntry)
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         pack();
@@ -136,6 +156,18 @@ public class Entry extends javax.swing.JFrame {
         Issues i = new Issues(con);
         i.setVisible(true);
     }//GEN-LAST:event_IssueEntryActionPerformed
+
+    private void OrderEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OrderEntryActionPerformed
+        // TODO add your handling code here:
+        Order o = new Order(con);
+        o.setVisible(true);
+    }//GEN-LAST:event_OrderEntryActionPerformed
+
+    private void productEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productEntryActionPerformed
+        // TODO add your handling code here:
+        Product p = new Product(con);
+        p.setVisible(true);
+    }//GEN-LAST:event_productEntryActionPerformed
 
     /**
      * @param args the command line arguments
@@ -178,5 +210,6 @@ public class Entry extends javax.swing.JFrame {
     private javax.swing.JButton EmployeeEntry;
     private javax.swing.JButton IssueEntry;
     private javax.swing.JButton OrderEntry;
+    private javax.swing.JButton productEntry;
     // End of variables declaration//GEN-END:variables
 }
