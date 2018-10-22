@@ -69,6 +69,11 @@ public class Entry extends javax.swing.JFrame {
         });
 
         IssueEntry.setText("Issue");
+        IssueEntry.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IssueEntryActionPerformed(evt);
+            }
+        });
 
         OrderEntry.setText("Order");
 
@@ -125,6 +130,12 @@ public class Entry extends javax.swing.JFrame {
         Customer c = new Customer(con);
         c.setVisible(true);
     }//GEN-LAST:event_CustomerEntryActionPerformed
+
+    private void IssueEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IssueEntryActionPerformed
+        // TODO add your handling code here:
+        Issues i = new Issues(con);
+        i.setVisible(true);
+    }//GEN-LAST:event_IssueEntryActionPerformed
 
     /**
      * @param args the command line arguments

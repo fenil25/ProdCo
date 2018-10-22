@@ -43,7 +43,7 @@ public class Customer extends javax.swing.JFrame {
         customerInfo = new javax.swing.JButton();
         addCustomer = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         customerInfo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         customerInfo.setText("Customer Info");
@@ -87,23 +87,23 @@ public class Customer extends javax.swing.JFrame {
 
     private void customerInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerInfoActionPerformed
         // TODO add your handling code here:
-        DisplayDepartment disd;
+        DisplayCustomer disd;
         try {
-            disd = new DisplayDepartment(con);
+            disd = new DisplayCustomer(con);
             disd.setVisible(true);
         } catch (SQLException ex) {
-            Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_customerInfoActionPerformed
 
     private void addCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCustomerActionPerformed
         // TODO add your handling code here:
-        AddDepartment ad;
+        AddCustomer ad;
         try {
-            ad = new AddDepartment(con, 0, -1, "", "", "", "");
+            ad = new AddCustomer(con, 0, -1, "", "", "", "");
             ad.setVisible(true);
         } catch (SQLException | ParseException ex) {
-            Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_addCustomerActionPerformed
 
