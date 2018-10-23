@@ -156,37 +156,40 @@ public class AddCustomer extends javax.swing.JFrame {
         String address = addressField.getText();
         String phone = phoneField.getText();
         
-        String query1, query2;  
-        query1 = String.format("INSERT INTO CUSTOMER (first_name, last_name, address, phone) VALUES('%s', '%s', '%s', '%s');", 
-                fname, lname, address, phone);
-        query2 = String.format("UPDATE CUSTOMER SET first_name = '%s', last_name = '%s', address = '%s', phone = '%s'"
-                + " WHERE idCustomer = %s;",
-                fname, lname, address, phone, customerId);
-        
-        
-        System.out.println(query1);
-        System.out.println(query2);
-        
-        try {
-            Statement addq = con.createStatement();
+        if(fname.equals("") || lname.equals("") || address.equals("") || phone.equals("")) {
             JFrame f = new JFrame();
-            if(updateFlag == 0){
-                addq.executeUpdate(query1);
-                JOptionPane.showMessageDialog(f, "Customer added successfully");
-            } else {
-                addq.executeUpdate(query2);
-                JOptionPane.showMessageDialog(f, "Customer updated successfully");
-            }
-            DisplayCustomer disc;
+            JOptionPane.showMessageDialog(f, "None of the fields can be empty.");
+        } else {
+
+            String query1, query2;  
+            query1 = String.format("INSERT INTO CUSTOMER (first_name, last_name, address, phone) VALUES('%s', '%s', '%s', '%s');", 
+                    fname, lname, address, phone);
+            query2 = String.format("UPDATE CUSTOMER SET first_name = '%s', last_name = '%s', address = '%s', phone = '%s'"
+                    + " WHERE idCustomer = %s;",
+                    fname, lname, address, phone, customerId);
+            System.out.println(query1);
+            System.out.println(query2);
             try {
-                disc = new DisplayCustomer(con);
-                disc.setVisible(true);
+                Statement addq = con.createStatement();
+                JFrame f = new JFrame();
+                if(updateFlag == 0){
+                    addq.executeUpdate(query1);
+                    JOptionPane.showMessageDialog(f, "Customer added successfully");
+                } else {
+                    addq.executeUpdate(query2);
+                    JOptionPane.showMessageDialog(f, "Customer updated successfully");
+                }
+                DisplayCustomer disc;
+                try {
+                    disc = new DisplayCustomer(con);
+                    disc.setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(DisplayCustomer.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(f, "Something Went Wrong");
+                }
             } catch (SQLException ex) {
-                Logger.getLogger(DisplayCustomer.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(f, "Something Went Wrong");
+                Logger.getLogger(AddCustomer.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(AddCustomer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_addCustomerActionPerformed
 

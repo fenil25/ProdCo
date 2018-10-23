@@ -162,31 +162,36 @@ public class AddOrder extends javax.swing.JFrame {
         String stage = stageField.getSelectedItem().toString()+"";
         String quantity = quantityField.getText();
         
-        String query1 = String.format("INSERT INTO order_product (idOrder, idProduct, stage, quantity) VALUES(%s, %s, '%s', %s);", 
-                order, product, stage, quantity);
-        
-        String query2 = String.format("UPDATE order_product SET idOrder = %s, idProduct = %s, stage = '%s', quantity = %s"
-                + " WHERE idOrder = %s AND idProduct = %s;", 
-                order, product, stage, quantity, oid, pid);
-        
-        System.out.println(query1);
-        System.out.println(query2);
-        try {
-            Statement addq = con.createStatement();
+        if(order.equals("") || product.equals("") || stage.equals("") || quantity.equals("")) {
             JFrame f = new JFrame();
-            if(updateFlag == 0){
-                addq.executeUpdate(query1);
-                JOptionPane.showMessageDialog(f, "Product Entry For Given Order added successfully");
-            } else {
-                addq.executeUpdate(query2);
-                JOptionPane.showMessageDialog(f, "Product Entry For Given Order updated successfully");
+            JOptionPane.showMessageDialog(f, "Some required fields are missing.");
+        } else {
+            String query1 = String.format("INSERT INTO order_product (idOrder, idProduct, stage, quantity) VALUES(%s, %s, '%s', %s);", 
+                    order, product, stage, quantity);
+
+            String query2 = String.format("UPDATE order_product SET idOrder = %s, idProduct = %s, stage = '%s', quantity = %s"
+                    + " WHERE idOrder = %s AND idProduct = %s;", 
+                    order, product, stage, quantity, oid, pid);
+
+            System.out.println(query1);
+            System.out.println(query2);
+            try {
+                Statement addq = con.createStatement();
+                JFrame f = new JFrame();
+                if(updateFlag == 0){
+                    addq.executeUpdate(query1);
+                    JOptionPane.showMessageDialog(f, "Product Entry For Given Order added successfully");
+                } else {
+                    addq.executeUpdate(query2);
+                    JOptionPane.showMessageDialog(f, "Product Entry For Given Order updated successfully");
+                }
+            } catch (SQLIntegrityConstraintViolationException e){
+                JFrame f = new JFrame();
+                JOptionPane.showMessageDialog(f, "The given entry for Product-Field already Exists");
             }
-        } catch (SQLIntegrityConstraintViolationException e){
-            JFrame f = new JFrame();
-            JOptionPane.showMessageDialog(f, "The given entry for Product-Field already Exists");
-        }
-        catch (SQLException ex) {
-            Logger.getLogger(AddOrder.class.getName()).log(Level.SEVERE, null, ex);
+            catch (SQLException ex) {
+                Logger.getLogger(AddOrder.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_addButtonActionPerformed
 

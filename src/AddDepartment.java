@@ -162,6 +162,11 @@ public class AddDepartment extends javax.swing.JFrame {
         String start_date = ft.format(startDateField.getDate());
         String man_id = emp.get(managerField.getSelectedItem().toString())+"";
         
+        if(name.equals("") || location.equals("") || start_date.equals("")) {
+            JFrame f = new JFrame();
+            JOptionPane.showMessageDialog(f, "Some required fields are missing.");
+        }
+        
         String query1, query2;
         if(man_id.equals("None")){
             query1 = String.format("INSERT INTO DEPARTMENT (name, location, start_date) VALUES('%s', '%s', '%s');", 

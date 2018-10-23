@@ -251,34 +251,44 @@ public class AddEmployee extends javax.swing.JFrame {
         String dept_no = dept.get(departmentvalue.getSelectedItem().toString())+"";
         String salary = salaryfield.getText();
         String taxbracket = taxbracketfield.getText();
-        String query1 = String.format("INSERT INTO EMPLOYEE (first_name, last_name, dob, address, phone, date_of_joining, position, "
-                + "department_no, salary, tax_bracket) VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', %s, %s, %s);", 
-                fname, lname, dob, address, phone, doj, position, dept_no, salary, taxbracket);
-        
-        String query2 = String.format("UPDATE EMPLOYEE SET first_name = '%s', last_name = '%s', dob = '%s', address = '%s', "
-                + "phone = '%s', date_of_joining = '%s', position = '%s', department_no = %s, salary = %s, tax_bracket = %s"
-                + " WHERE idEmployee = %s;", 
-                fname, lname, dob, address, phone, doj, position, dept_no, salary, taxbracket, employeeID);
-        try {
-            Statement addq = con.createStatement();
+        if(fname.equals("") || lname.equals("") || dob.equals("") || address.equals("") || phone.equals("") || 
+                doj.equals("") || position.equals("") || dept_no.equals("") || salary.equals("") || taxbracket.equals("")) {
             JFrame f = new JFrame();
-            if(updateFlag==0){
-                addq.executeUpdate(query1);
-                JOptionPane.showMessageDialog(f, "Employee added successfully");
-            } else {
-                addq.executeUpdate(query2);
-                JOptionPane.showMessageDialog(f, "Employee updated successfully");
-            }
-            DisplayEmployees dise;
+            JOptionPane.showMessageDialog(f, "None of the fields can be empty.");
+        }
+        else if(!salary.matches("[0-9]+") || !taxbracket.matches("[0-9]+")){
+            JFrame f = new JFrame();
+            JOptionPane.showMessageDialog(f, "Please enter only numeric characters in Salary and Tax Bracket Field.");
+        } else {
+            String query1 = String.format("INSERT INTO EMPLOYEE (first_name, last_name, dob, address, phone, date_of_joining, position, "
+                    + "department_no, salary, tax_bracket) VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', %s, %s, %s);", 
+                    fname, lname, dob, address, phone, doj, position, dept_no, salary, taxbracket);
+
+            String query2 = String.format("UPDATE EMPLOYEE SET first_name = '%s', last_name = '%s', dob = '%s', address = '%s', "
+                    + "phone = '%s', date_of_joining = '%s', position = '%s', department_no = %s, salary = %s, tax_bracket = %s"
+                    + " WHERE idEmployee = %s;", 
+                    fname, lname, dob, address, phone, doj, position, dept_no, salary, taxbracket, employeeID);
             try {
-                dise = new DisplayEmployees(con);
-                dise.setVisible(true);
+                Statement addq = con.createStatement();
+                JFrame f = new JFrame();
+                if(updateFlag==0){
+                    addq.executeUpdate(query1);
+                    JOptionPane.showMessageDialog(f, "Employee added successfully");
+                } else {
+                    addq.executeUpdate(query2);
+                    JOptionPane.showMessageDialog(f, "Employee updated successfully");
+                }
+                DisplayEmployees dise;
+                try {
+                    dise = new DisplayEmployees(con);
+                    dise.setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(f, "Something Went Wrong");
+                }
             } catch (SQLException ex) {
-                Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(f, "Something Went Wrong");
+                Logger.getLogger(AddEmployee.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(AddEmployee.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_addEmployeeActionPerformed
 

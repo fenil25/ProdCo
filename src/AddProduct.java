@@ -110,25 +110,31 @@ public class AddProduct extends javax.swing.JFrame {
         // TODO add your handling code here:
         String n= name.getText();
         String d = descriptionField.getText();
-        String query1 = String.format("INSERT INTO product (name, description) VALUES('%s', '%s');", n, d);
-        System.out.println(query1);        
-        try {
-            Statement addq = con.createStatement();
+        
+        if(n.equals("") || d.equals("")) {
             JFrame f = new JFrame();
-            addq.executeUpdate(query1);
-            JOptionPane.showMessageDialog(f, "Product added successfully");
-            DisplayProduct dp;
+            JOptionPane.showMessageDialog(f, "Name and Description Fields Are Required.");
+        } else{
+            String query1 = String.format("INSERT INTO product (name, description) VALUES('%s', '%s');", n, d);
+            System.out.println(query1);        
             try {
-                dp = new DisplayProduct(con);
-                dp.setVisible(true);
+                Statement addq = con.createStatement();
+                JFrame f = new JFrame();
+                addq.executeUpdate(query1);
+                JOptionPane.showMessageDialog(f, "Product added successfully");
+                DisplayProduct dp;
+                try {
+                    dp = new DisplayProduct(con);
+                    dp.setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Product.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(f, "SQL EXCEPTION");
+                }
             } catch (SQLException ex) {
-                Logger.getLogger(Product.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(f, "SQL EXCEPTION");
+                Logger.getLogger(AddDepartment.class.getName()).log(Level.SEVERE, null, ex);
+                JFrame f = new JFrame();
+                JOptionPane.showMessageDialog(f, "Unable to add product");
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(AddDepartment.class.getName()).log(Level.SEVERE, null, ex);
-            JFrame f = new JFrame();
-            JOptionPane.showMessageDialog(f, "Unable to add product");
         }
     }//GEN-LAST:event_addProductActionPerformed
 
