@@ -99,6 +99,7 @@ public class DisplayCustomer extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        cTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(cTable);
 
         delete.setText("DELETE ALL");

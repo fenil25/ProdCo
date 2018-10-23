@@ -25,6 +25,7 @@ public class RegisterOrder extends javax.swing.JFrame {
 
     private Connection con;
     HashMap<String, Integer> cust = new HashMap<>();
+    private int orderId, updateFlag;
     
     /**
      * Creates new form RegisterOrder
@@ -33,8 +34,10 @@ public class RegisterOrder extends javax.swing.JFrame {
         initComponents();
     }
     
-    public RegisterOrder(Connection con) throws SQLException, ParseException {
+    public RegisterOrder(Connection con, int updateFlag, int oid, String name, String pon, String dl, String cname) throws SQLException, ParseException {
         this.con = con;
+        this.updateFlag = updateFlag;
+        this.orderId = oid;
         initComponents();
         Statement st = con.createStatement();
         ResultSet r = st.executeQuery("SELECT * FROM CUSTOMER");
@@ -43,6 +46,14 @@ public class RegisterOrder extends javax.swing.JFrame {
             cust.put(r.getString("first_name") + " " + r.getString("last_name"), Integer.parseInt(r.getString("idCustomer")));
         }
         AutoCompletion.enable(customerName);
+        
+        if(updateFlag==1){
+            orderName.setText(name);
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            placedOn.setDate(df.parse(pon));
+            deadline.setDate(df.parse(dl));
+            customerName.setSelectedItem(cname);
+        }
     }
 
     /**
@@ -146,18 +157,39 @@ public class RegisterOrder extends javax.swing.JFrame {
         String query1 = String.format("INSERT INTO ORDERS (order_name, placed_on, deadline, customer_id) VALUES('%s', '%s', '%s', %s);", 
                     name, placed_on, deadLine, cus_id);
         
-        System.out.println(query1);
+        String query2 = String.format("UPDATE ORDERS SET order_name = '%s', placed_on = '%s', deadline = '%s', customer_id = %s"
+                + " WHERE idOrder = %s;",
+                name, placed_on, deadLine, cus_id, orderId);
         
-        try {
-            Statement addq = con.createStatement();
-            JFrame f = new JFrame();
-            addq.executeUpdate(query1);
-            JOptionPane.showMessageDialog(f, "Order registered successfully");
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(AddDepartment.class.getName()).log(Level.SEVERE, null, ex);
-            JFrame f = new JFrame();
-            JOptionPane.showMessageDialog(f, "Unable to Register Your Order");
+        System.out.println(query1);
+        System.out.println(query2);
+        
+        if(updateFlag == 0){
+            try {
+                Statement addq = con.createStatement();
+                JFrame f = new JFrame();
+                addq.executeUpdate(query1);
+                JOptionPane.showMessageDialog(f, "Order registered successfully");
+                DisplayOrders dod = new DisplayOrders(con);
+                dod.setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(AddDepartment.class.getName()).log(Level.SEVERE, null, ex);
+                JFrame f = new JFrame();
+                JOptionPane.showMessageDialog(f, "Unable to Register Your Order");
+            }
+        } else {
+            try {
+                Statement addq = con.createStatement();
+                JFrame f = new JFrame();
+                addq.executeUpdate(query2);
+                JOptionPane.showMessageDialog(f, "Order updated successfully");
+                DisplayOrders dod = new DisplayOrders(con);
+                dod.setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(AddDepartment.class.getName()).log(Level.SEVERE, null, ex);
+                JFrame f = new JFrame();
+                JOptionPane.showMessageDialog(f, "Unable to update Your Order");
+            }
         }
     }//GEN-LAST:event_registerOrderActionPerformed
 

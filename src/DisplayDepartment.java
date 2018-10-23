@@ -50,8 +50,8 @@ public class DisplayDepartment extends javax.swing.JFrame {
         Statement st1 = con.createStatement();
         ResultSet r = st1.executeQuery("SELECT * FROM EMPLOYEE");
         while(r.next()){
-            managerField.addItem(r.getString("first_name")+" "+r.getString("last_name"));
-            mang.put(r.getString("first_name")+" "+r.getString("last_name"), Integer.parseInt(r.getString("idEmployee")));
+            managerField.addItem(r.getString("idEmployee") + ": " + r.getString("first_name")+" "+r.getString("last_name"));
+            mang.put(r.getString("idEmployee") + ": " + r.getString("first_name")+" "+r.getString("last_name"), Integer.parseInt(r.getString("idEmployee")));
             inv.put(Integer.parseInt(r.getString("idEmployee")), r.getString("first_name")+" "+r.getString("last_name"));
         }
         AutoCompletion.enable(managerField);
@@ -119,6 +119,7 @@ public class DisplayDepartment extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        departmentTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(departmentTable);
 
         dateLabel.setText("Starting Date");

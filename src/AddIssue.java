@@ -26,7 +26,7 @@ public class AddIssue extends javax.swing.JFrame {
 
     private Connection con;
     HashMap<String, Integer> emp = new HashMap<>();
-    HashMap<String, Integer> cust = new HashMap<>();
+    HashMap<String, Integer> ord = new HashMap<>();
     private String caller;
     private int updateFlag, issueId;
     
@@ -62,16 +62,26 @@ public class AddIssue extends javax.swing.JFrame {
             }
         }else{
             headLabel.setText("Customer Issue");
+            reportedByLabel.setText("Reported For");
             Statement st3 = con.createStatement();
-            ResultSet r3 = st3.executeQuery("SELECT * FROM Customer");
+            ResultSet r3 = st3.executeQuery("SELECT * FROM Orders");
             while(r3.next()){
-                reportedByField.addItem(r3.getString("first_name") + " " + r3.getString("last_name"));
-                cust.put(r3.getString("first_name") + " " + r3.getString("last_name"), Integer.parseInt(r3.getString("idCustomer")));
+                reportedByField.addItem(r3.getString("order_name"));
+                ord.put(r3.getString("order_name"), Integer.parseInt(r3.getString("idOrder")));
             }
         }
         
         AutoCompletion.enable(assignedToField);
         AutoCompletion.enable(reportedByField);
+        
+        if(updateFlag == 1){
+            nameField.setText(name);
+            descriptionField.setText(desc);
+            statusField.setSelectedItem(status);
+            reportedByField.setSelectedItem(rby);
+            assignedToField.setSelectedItem(assto);
+            addButton.setText("Update Issue");
+        }
     }
 
     /**
@@ -115,7 +125,12 @@ public class AddIssue extends javax.swing.JFrame {
 
         statusLabel.setText("Status");
 
-        statusField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Raised", "Started Working", "Mildly Completed", "Left Uncompleted", "Closed" }));
+        statusField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Raised", "Resolved" }));
+        statusField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                statusFieldActionPerformed(evt);
+            }
+        });
 
         reportedByLabel.setText("Reported By");
 
@@ -176,8 +191,8 @@ public class AddIssue extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(statusField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(statusLabel))
+                    .addComponent(statusLabel)
+                    .addComponent(statusField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(reportedByLabel)
@@ -222,18 +237,58 @@ public class AddIssue extends javax.swing.JFrame {
                 JFrame f = new JFrame();
                 if(updateFlag == 0){
                     addq.executeUpdate(query1);
-                    JOptionPane.showMessageDialog(f, "Issue added successfully");
+                    JOptionPane.showMessageDialog(f, "Employee's Issue added successfully");
+                    DisplayEmpIssue dei = new DisplayEmpIssue(con, "employee");
+                    dei.setVisible(true);
                 } else {
                     addq.executeUpdate(query2);
-                    JOptionPane.showMessageDialog(f, "Issue updated successfully");
+                    JOptionPane.showMessageDialog(f, "Employee's Issue updated successfully");
+                    DisplayEmpIssue dei = new DisplayEmpIssue(con, "employee");
+                    dei.setVisible(true);
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(AddDepartment.class.getName()).log(Level.SEVERE, null, ex);
             }
         }else{
+            String name = nameField.getText();
+            String description = descriptionField.getText();
+            String reported_for_id = ord.get(reportedByField.getSelectedItem().toString())+"";
+            String assigned_to_id = emp.get(assignedToField.getSelectedItem().toString())+"";
+            String status = statusField.getSelectedItem().toString()+"";
+
+            String query1, query2;
+            query1 = String.format("INSERT INTO order_issue (name, description, raised_for, assigned_to, status) VALUES('%s', '%s', %s, %s, '%s');", 
+                    name, description, reported_for_id, assigned_to_id, status);
+            query2 = String.format("UPDATE order_issue SET name = '%s', description = '%s', status = '%s', raised_for = %s, assigned_to = %s"
+                    + " WHERE idOrder_Issue = %s;",
+                     name, description, status, reported_for_id, assigned_to_id, issueId);
             
+            System.out.println(query1);
+            System.out.println(query2);
+
+            try {
+                Statement addq = con.createStatement();
+                JFrame f = new JFrame();
+                if(updateFlag == 0){
+                    addq.executeUpdate(query1);
+                    JOptionPane.showMessageDialog(f, "Customer's Issue added successfully");
+                    DisplayEmpIssue dei = new DisplayEmpIssue(con, "customer");
+                    dei.setVisible(true);
+                } else {
+                    addq.executeUpdate(query2);
+                    JOptionPane.showMessageDialog(f, "Customer's Issue updated successfully");
+                    DisplayEmpIssue dei = new DisplayEmpIssue(con, "customer");
+                    dei.setVisible(true);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(AddDepartment.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_addButtonActionPerformed
+
+    private void statusFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_statusFieldActionPerformed
 
     /**
      * @param args the command line arguments

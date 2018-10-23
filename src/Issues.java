@@ -41,6 +41,8 @@ public class Issues extends javax.swing.JFrame {
 
         cst_issue = new javax.swing.JButton();
         emp_issue = new javax.swing.JButton();
+        displayEmpIssues = new javax.swing.JButton();
+        dispOrderIssue = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -58,31 +60,46 @@ public class Issues extends javax.swing.JFrame {
             }
         });
 
+        displayEmpIssues.setText("See All Employee Issues");
+        displayEmpIssues.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                displayEmpIssuesActionPerformed(evt);
+            }
+        });
+
+        dispOrderIssue.setText("See All Order Issues");
+        dispOrderIssue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dispOrderIssueActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(97, Short.MAX_VALUE)
-                .addComponent(cst_issue, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(76, 76, 76))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(95, Short.MAX_VALUE)
-                    .addComponent(emp_issue, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(73, 73, 73)))
+                .addContainerGap(175, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(displayEmpIssues, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(cst_issue, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+                        .addComponent(emp_issue, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+                        .addComponent(dispOrderIssue, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(167, 167, 167))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(198, Short.MAX_VALUE)
+                .addGap(32, 32, 32)
+                .addComponent(emp_issue, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addComponent(displayEmpIssues, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38)
                 .addComponent(cst_issue, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(85, 85, 85))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(78, 78, 78)
-                    .addComponent(emp_issue, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(205, Short.MAX_VALUE)))
+                .addGap(42, 42, 42)
+                .addComponent(dispOrderIssue, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(84, 84, 84))
         );
 
         pack();
@@ -109,6 +126,28 @@ public class Issues extends javax.swing.JFrame {
             Logger.getLogger(Issues.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_cst_issueActionPerformed
+
+    private void displayEmpIssuesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayEmpIssuesActionPerformed
+        // TODO add your handling code here:
+        DisplayEmpIssue ei;
+        try {
+            ei = new DisplayEmpIssue(con, "employee");
+            ei.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Issues.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_displayEmpIssuesActionPerformed
+
+    private void dispOrderIssueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dispOrderIssueActionPerformed
+        // TODO add your handling code here:
+        DisplayEmpIssue ei;
+        try {
+            ei = new DisplayEmpIssue(con, "order");
+            ei.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Issues.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_dispOrderIssueActionPerformed
 
     /**
      * @param args the command line arguments
@@ -147,6 +186,8 @@ public class Issues extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cst_issue;
+    private javax.swing.JButton dispOrderIssue;
+    private javax.swing.JButton displayEmpIssues;
     private javax.swing.JButton emp_issue;
     // End of variables declaration//GEN-END:variables
 }

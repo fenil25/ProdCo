@@ -44,8 +44,8 @@ public class AddDepartment extends javax.swing.JFrame {
         ResultSet r = st.executeQuery("SELECT * FROM Employee");
         managerField.addItem("None");
         while(r.next()){
-            managerField.addItem(r.getString("first_name") + " " + r.getString("last_name"));
-            emp.put(r.getString("first_name") + " " + r.getString("last_name"), Integer.parseInt(r.getString("idEmployee")));
+            managerField.addItem(r.getString("idEmployee") + ": " + r.getString("first_name") + " " + r.getString("last_name"));
+            emp.put(r.getString("idEmployee") + ": " + r.getString("first_name") + " " + r.getString("last_name"), Integer.parseInt(r.getString("idEmployee")));
         }
         AutoCompletion.enable(managerField);
         if(updateFlag == 1){
