@@ -159,6 +159,11 @@ public class DisplayOrders extends javax.swing.JFrame {
         });
 
         moreInfo.setText("More Info About Products");
+        moreInfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                moreInfoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -237,15 +242,15 @@ public class DisplayOrders extends javax.swing.JFrame {
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(147, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 355, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(updateEntry, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(deleteEntry, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(moreInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(deleteAll, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(93, 93, 93))))
+                        .addGap(30, 30, 30))))
         );
 
         pack();
@@ -417,6 +422,24 @@ public class DisplayOrders extends javax.swing.JFrame {
             Logger.getLogger(DisplayEmployees.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_deleteAllActionPerformed
+
+    private void moreInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moreInfoActionPerformed
+        // TODO add your handling code here:
+        int rowIndex =  orderTable.getSelectedRow();
+        JFrame f = new JFrame();
+        if (rowIndex == -1) {
+            JOptionPane.showMessageDialog(f, "Please Select an Entry To Perform This Operation");
+        } else {
+            int d = Integer.parseInt(orderTable.getValueAt(rowIndex, 0).toString());
+            DisplayOrderProduct dop;
+            try {
+                dop = new DisplayOrderProduct(con, d);
+                dop.setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(DisplayOrders.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_moreInfoActionPerformed
 
     /**
      * @param args the command line arguments
